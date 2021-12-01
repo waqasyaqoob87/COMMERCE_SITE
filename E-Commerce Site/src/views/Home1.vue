@@ -179,40 +179,41 @@ export default {
           v
         ) || "Password must be valid",
     ],
-
   }),
 
   methods: {
-    registerUser() {      
+    registerUser() {
       let user = {
         username: this.username,
         email: this.email,
-        password: this.password
+        password: this.password,
       };
-      localStorage.setItem(user.email,JSON.stringify(user))
+      localStorage.setItem(user.email, JSON.stringify(user));
       // store user in local storage
       if (localStorage.user) {
         let lsUsers = localStorage.user;
         this.users = JSON.parse(lsUsers);
         this.users.push(user);
-        for(let i=0; i< lsUsers.length; i++){
-          alert(this.username)
-          if (lsUsers[i].email == this.email && lsUsers[i].username == this.username){
+        for (let i = 0; i < lsUsers.length; i++) {
+          alert(this.username);
+          if (
+            lsUsers[i].email == this.email &&
+            lsUsers[i].username == this.username
+          ) {
             alert("User already exists");
-          }
-          else{
+          } else {
             if (this.validated == true) {
               this.users.push(user);
               alert("User signed up successfully");
               this.username = "";
               this.email = "";
               this.password = "";
-              
             }
           }
         }
       }
-   },
+    },
+
     validate() {
       var validated = this.$refs.form.validate();
       if (validated == true) {
@@ -224,15 +225,21 @@ export default {
     login() {
       var validated = this.$refs.form.validate();
       if (validated == true) {
-        let lsUsers = localStorage.users;
-        lsUsers = JSON.parse(lsUsers);
-        if (lsUsers.email == this.email && lsUsers.password == this.password){
-          alert("User logged in successfully");
-          this.$router.push("/1");
+        let Keys = Object.keys(localStorage);
+        for (let key of Keys) {
+          if (this.email === key) {
+            if (
+              this.password === JSON.parse(localStorage.getItem(key)).password
+            ) {
+              alert("User logged in successfully");
+              this.$router.push("/1");
+            }
+            else{
+              alert("Login Failed")
+            }
+          }
         }
-        else {
-          alert("Login Failed");
-        }
+
       }
     },
   },
