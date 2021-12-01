@@ -183,21 +183,18 @@ export default {
   }),
 
   methods: {
-    registerUser() {
-      
+    registerUser() {      
       let user = {
         username: this.username,
         email: this.email,
         password: this.password
       };
-      alert(this.username)
-      localStorage.setItem('users',JSON.stringify(user))
+      localStorage.setItem(user.email,JSON.stringify(user))
       // store user in local storage
-      if (localStorage.users) {
-        let lsUsers = localStorage.users;
-        alert( lsUsers)
-        lsUsers = JSON.parse(lsUsers);
-        alert(this.username)
+      if (localStorage.user) {
+        let lsUsers = localStorage.user;
+        this.users = JSON.parse(lsUsers);
+        this.users.push(user);
         for(let i=0; i< lsUsers.length; i++){
           alert(this.username)
           if (lsUsers[i].email == this.email && lsUsers[i].username == this.username){
@@ -215,7 +212,7 @@ export default {
           }
         }
       }
-    },
+   },
     validate() {
       var validated = this.$refs.form.validate();
       if (validated == true) {
