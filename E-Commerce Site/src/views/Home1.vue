@@ -155,7 +155,7 @@ export default {
         email: "",
         password: "",
         validated: "",
-        arrayUser: [],
+        users: [],
       };
     },
     step: 1,
@@ -164,7 +164,7 @@ export default {
 
     nameRules: [
       (v) => !!v || "Name is required",
-      (v) => (v && v.length <= 10) || "Name must be less than 10 characters",
+      (v) => (v && v.length <= 20) || "Name must be less than 20 characters",
     ],
     Email: "",
     emailRules: [
@@ -195,15 +195,17 @@ export default {
       // store user in local storage
       if (localStorage.users) {
         let lsUsers = localStorage.users;
+        alert( lsUsers)
         lsUsers = JSON.parse(lsUsers);
+        alert(this.username)
         for(let i=0; i< lsUsers.length; i++){
+          alert(this.username)
           if (lsUsers[i].email == this.email && lsUsers[i].username == this.username){
             alert("User already exists");
           }
           else{
             if (this.validated == true) {
-              this.arrayUser.push(user);
-              // localStorage.setItem("users", JSON.stringify(this.arrayUser));
+              this.users.push(user);
               alert("User signed up successfully");
               this.username = "";
               this.email = "";
@@ -221,20 +223,6 @@ export default {
         this.step++;
       }
     },
-    // login() {
-    //   var validated = this.$refs.form.validate();
-    //   if (validated == true) {
-    //     let lsUsers = localStorage.users;
-    //     lsUsers = JSON.parse(lsUsers);
-    //     for(let i=0; i< lsUsers.length; i++){
-    //       if (lsUsers[i].email == this.email && lsUsers[i].password == this.password){
-    //         alert("User logged in successfully");
-    //         this.$router.push("/1");
-    //       }
-    //     }
-    //     alert("Login Failed");
-    //   }
-    // },
 
     login() {
       var validated = this.$refs.form.validate();
